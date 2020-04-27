@@ -3,6 +3,7 @@ import os
 
 from dotenv import load_dotenv
 from flask import Flask
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
 from .blueprints import main
@@ -20,6 +21,9 @@ def create_app():
         os.environ["SQLALCHEMY_DATABASE_URI"]
     app.config['ENV'] = os.getenv("ENV", "dev")
     DB.init_app(app)
+
+    from app.models import User
+    Migrate(app, DB)
 
     app.register_blueprint(main)
 
