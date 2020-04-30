@@ -1,4 +1,4 @@
 # /app/blueprints/__init__.py
-from .home import home_bp
+from .main import main
 
-__all__ = ['home_bp']
+__all__ = ['main']
