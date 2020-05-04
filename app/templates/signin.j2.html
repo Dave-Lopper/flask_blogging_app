@@ -1,0 +1,74 @@
+
+{% extends "layout.j2.html" %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',
+    filename='signin.css') }}" />
+{% endblock %}
+{% block title %}Singin'{% endblock %}
+{% block content %}
+<div class="row pt-5">
+    <div class="col-lg-8 col-md-8 col-sm-10 col-xs-12 mx-auto mt-5">
+        <h1 class="text-center mt-4">Not with us yet ?<br/> Create your account
+                and
+                blog
+                with us !</h1>
+        </div>
+
+        <div class="col-lg-8 col-md-8 col-sm-10 col-xs-12 mx-auto signInForm">
+            <h3>Signin'</h3>
+
+            <form method="POST" action="/register">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><div
+                            class="form-group">
+                            <label for="signin_email">Email address</label>
+                            <input type="email" class="form-control"
+                                id="SigninInputEmail" name="signin_email"
+                                placeholder="Enter email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signin_first_name">First name</label>
+                            <input type="text" class="form-control"
+                                id="SigninInputFName" name="signin_first_name"
+                                placeholder="Enter first name" minlength="2"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signin_last_name">Last name</label>
+                            <input type="text" class="form-control"
+                                id="SigninInputLName" name="signin_last_name"
+                                placeholder="Enter last name" minlength="2"
+                                required>
+                        </div></div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><div
+                            class="form-group">
+                            <label for="signin_birth_date">Birth date</label>
+                            <input type="date" class="form-control"
+                                id="SigninInputBdate" name="signin_birth_date"
+                                placeholder="Enter birth date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signin_password">Password</label>
+                            <input type="password" class="form-control"
+                                id="SigninInputPassword" name="signin_password"
+                                placeholder="Password" minlength="8" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signin_password_confirm">Confirm
+                                password</label>
+                            <input type="password" class="form-control"
+                                id="SigninInputPasswordConfirm"
+                                name="signin_password_confirm"
+                                placeholder="Confirm password" minlength="8"
+                                required>
+                        </div></div>
+                </div>
+                <p>Already have an account ? Simply <a href="/">Log-in'</a> to
+                    blog
+                    !</p>
+                <button type="submit" class="btn btn-secondary">Submit</button>
+            </form>
+        </div>
+    </div>
+    {% endblock %}
