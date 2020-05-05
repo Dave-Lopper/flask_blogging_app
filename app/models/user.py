@@ -1,7 +1,7 @@
 # /app/models/user.py
 from sqlalchemy import DateTime
 
-from ..boot import DB
+from app.boot import DB
 
 
 class User(DB.Model):
