@@ -20,13 +20,25 @@
 
             <form method="POST" action="/register">
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><div
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div
                             class="form-group">
                             <label for="signin_email">Email address</label>
                             <input type="email" class="form-control"
                                 id="SigninInputEmail" name="signin_email"
                                 placeholder="Enter email" required>
+                            {% with errors =
+                            get_flashed_messages(category_filter=["email"]) %}
+                            {% if errors %}
+                            {% for msg in errors %}
+                            <div class="alert alert-danger mt-2" role="alert">
+                                {{ msg }}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                            {% endwith %}
                         </div>
+
                         <div class="form-group">
                             <label for="signin_first_name">First name</label>
                             <input type="text" class="form-control"
@@ -62,6 +74,17 @@
                                 name="signin_password_confirm"
                                 placeholder="Confirm password" minlength="8"
                                 required>
+                            {% with errors =
+                            get_flashed_messages(category_filter=["password"])
+                            %}
+                            {% if errors %}
+                            {% for msg in errors %}
+                            <div class="alert alert-danger mt-2" role="alert">
+                                {{ msg }}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                            {% endwith %}
                         </div></div>
                 </div>
                 <p>Already have an account ? Simply <a href="/">Log-in'</a> to
