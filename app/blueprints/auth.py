@@ -3,12 +3,29 @@ from datetime import date
 import re
 
 from flask import Blueprint, request, redirect, url_for, flash
-from werkzeug.security import generate_password_hash
+from flask_login import login_user
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from app.models import User
 from app.boot import DB
 
 auth = Blueprint("auth", __name__)
+
+
+@auth.route("/login", methods=["POST"])
+def login():
+    email = request.form.get("login_email")
+    password = request.form.get("login_password")
+    user = User.query.filter_by(email=email).first()
+
+    if not user or not check_password_hash(user.password, password):
+        flash("Please check your login details and try again.")
+        return redirect(url_for("main.index"))
+
+    remember = True if request.form.get("login_rememberme") else False
+    login_user(user, remember=remember)
+
+    return redirect(url_for("main.loggedin"))
 
 
 @auth.route("/register", methods=["POST"])
@@ -40,4 +57,6 @@ def register():
                 registered_at=date.today())
     DB.session.add(user)
     DB.session.commit()
-    return redirect(url_for("main.index"))
+
+    login_user(user)
+    return redirect(url_for("main.loggedin"))

@@ -29,6 +29,13 @@
                 <input type="checkbox" id="LoginRememberMe"
                     name="login_rememberme">
             </div>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="alert alert-danger">
+                {{ messages[0] }}
+            </div>
+            {% endif %}
+            {% endwith %}
             <button type="submit" class="btn btn-primary
                 btnLogin">Submit</button>
         </form>

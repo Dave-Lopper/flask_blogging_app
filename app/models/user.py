@@ -1,11 +1,12 @@
 # /app/models/user.py
+from flask_login import UserMixin
 from sqlalchemy import DateTime
 
 from app.boot import DB
 
 
-class User(DB.Model):
-    __tablename__ = 'users'
+class User(UserMixin, DB.Model):
+    __tablename__ = "users"
     id = DB.Column(DB.Integer, primary_key=True, nullable=False)
     email = DB.Column(DB.String(150), unique=True)
     password = DB.Column(DB.String(100))
