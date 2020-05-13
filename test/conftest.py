@@ -3,7 +3,7 @@ import os
 
 import pytest
 
-from app.boot import create_app
+from app.boot import create_app, DB
 
 
 @pytest.fixture
@@ -16,3 +16,11 @@ def test_client():
     ctx.push()
     yield app.test_client()
     ctx.pop()
+
+
+@pytest.fixture
+def db_init():
+    DB.create_all()
+    yield DB
+    DB.session.close()
+    DB.drop_all()
