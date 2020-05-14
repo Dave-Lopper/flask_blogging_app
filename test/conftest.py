@@ -4,6 +4,7 @@ import os
 import pytest
 
 from app.boot import create_app, DB
+from .factories import UserFactory
 
 
 @pytest.fixture
@@ -24,3 +25,13 @@ def db_init():
     yield DB
     DB.session.close()
     DB.drop_all()
+
+
+@pytest.fixture
+def insert_user(request):
+    if hasattr(request, "param"):
+        UserFactory.create_batch(request.param)
+        return request.param
+    else:
+        UserFactory.create()
+        return 1

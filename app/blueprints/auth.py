@@ -24,7 +24,6 @@ def login():
     email = request.form.get("login_email")
     password = request.form.get("login_password")
     user = User.query.filter_by(email=email).first()
-
     if not user or not check_password_hash(user.password, password):
         flash("Please check your login details and try again.")
         return redirect(url_for("main.index"))
