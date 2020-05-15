@@ -3,13 +3,20 @@ from datetime import date
 import re
 
 from flask import Blueprint, request, redirect, url_for, flash
-from flask_login import login_user
+from flask_login import login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app.models import User
 from app.boot import DB
 
 auth = Blueprint("auth", __name__)
+
+
+@login_required
+@auth.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('main.index'))
 
 
 @auth.route("/login", methods=["POST"])

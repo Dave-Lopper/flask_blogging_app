@@ -17,7 +17,12 @@
         {% endblock %}
     </head>
     <body>
-        <div class="container-fluid">
+        <div class="container-fluid p-0">
+            {% if current_user.is_authenticated %}
+            <header>
+                <div class="float-right mt-3 mr-4"><a href="/logout">Logout</a></div>
+            </header>
+            {% endif %}
             {% block content %}
             {% endblock %}
         </div>

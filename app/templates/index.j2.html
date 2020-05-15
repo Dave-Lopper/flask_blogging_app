@@ -5,46 +5,9 @@
 {% block title %}Home{% endblock %}
 {% block content %}
 <div class="row">
-    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12
-        sidebar-unlogged">
-        <h3 class="subtitle mt-4">
-            Login'
-        </h3>
-        <form method="POST" action="/login">
-            <div class="form-group">
-                <label for="login_email">Email address</label>
-                <input type="email" class="form-control"
-                    id="LoginInputEmail" name="login_email"
-                    placeholder="Enter email" required>
-            </div>
-            <div class="form-group">
-                <label for="login_password">Password</label>
-                <input type="password" class="form-control"
-                    id="LoginInputPassword"
-                    name="login_password"
-                    placeholder="Password" required>
-            </div>
-            <div class="form-group">
-                <label for="login_rememberme">Remember me ?</label>
-                <input type="checkbox" id="LoginRememberMe"
-                    name="login_rememberme">
-            </div>
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            <div class="alert alert-danger">
-                {{ messages[0] }}
-            </div>
-            {% endif %}
-            {% endwith %}
-            <button type="submit" class="btn btn-primary
-                btnLogin">Submit</button>
-        </form>
-        <p class="mt-4">Not with us yet ?<br/> <a
-                    href="/signin">Signin'</a>
-                to blog
-                !
-            </p>
-        </div>
-        <h1 class="ml-4 mt-4">Bloggin'</h1>
-    </div>
-    {% endblock %}
+    {% if not current_user.is_authenticated %}
+    {% include "sidebar-login.j2.html" %}
+    {% endif %}
+    <h1 class="ml-4 mt-4">Bloggin'</h1>
+</div>
+{% endblock %}
