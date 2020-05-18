@@ -31,7 +31,7 @@ def login():
     remember = True if request.form.get("login_rememberme") else False
     login_user(user, remember=remember)
 
-    return redirect(url_for("main.loggedin"))
+    return redirect(url_for("main.profile"))
 
 
 @auth.route("/register", methods=["POST"])
@@ -65,4 +65,4 @@ def register():
     DB.session.commit()
 
     login_user(user)
-    return redirect(url_for("main.loggedin"))
+    return redirect(url_for("main.profile"))

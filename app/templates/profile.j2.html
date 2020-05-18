@@ -1,0 +1,104 @@
+
+{% extends "layout.j2.html" %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',
+    filename='profile.css') }}" />
+{% endblock %}
+{% block title %}Pofile{% endblock %}
+{% block content %}
+<div class="row pt-5">
+    <div class="col-8 offset-2 pt-5">
+        <h1 class="mt-4">Profile</h1>
+        <p>
+            Hi {{ current_user.first_name }},
+            this space is yours, here you can edit your profile&apos;s
+            informations.
+        </p>
+
+        <h3 class="mt-5">Edit profile</h1>
+        <form method="POST" action="/edit_profile" class="pt-4
+            profileForm">
+            <div class="form-group row mt-5">
+                <label for="edit_email" class="col-2 d-flex flex-column
+                    justify-content-end"><b>Email address</b></label>
+                <div class="col-10">
+                    <input type="email" class="form-control"
+                        id="EditInputEmail" name="edit_email" required
+                        value="{{ current_user.email }}">
+                </div>
+                {% with errors =
+                get_flashed_messages(category_filter=["edit"]) %}
+                {% if errors %}
+                {% for msg in errors %}
+                <div class="alert alert-danger mt-2 w-100" role="alert">
+                    {{ msg }}
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+            <div class="form-group row mt-5">
+                <label for="edit_first_name" class="col-2 d-flex flex-column
+                    justify-content-end"><b>First name</b></label>
+                <div class="col-10">
+                    <input type="text" class="form-control"
+                        id="EditInputFName" name="edit_first_name"
+                        minlength="2" required value="{{
+                        current_user.first_name }}">
+                </div>
+            </div>
+            <div class="form-group row mt-5">
+                <label for="edit_last_name" class="col-2 d-flex flex-column
+                    justify-content-end"><b>Last name</b></label>
+                <div class="col-10">
+                    <input type="text" class="form-control"
+                        id="EditInputLName" name="edit_last_name"
+                        minlength="2" required value="{{
+                        current_user.last_name }}">
+                </div>
+            </div>
+            <div class="form-group col-4 offset-8 d-flex flex-row
+                justify-content-end pr-0 mt-5">
+                <button type="submit" class="btn btn-secondary mr-2">Submit</button>
+                <a class="btn btn-outline-secondary"
+                    href="profile/change_password" role="button">
+                    Change password
+                </a>
+            </div>
+        </form>
+
+        <h3 class="mt-5 text-danger">Delete profile</h1>
+        <form method="POST" action="/delete_profile" class="mb-5 pt-4
+            profileFormDelete">
+            <div class="form-group row mt-3">
+                <label for="edit_first_name" class="col-4 d-flex flex-column
+                    justify-content-end">
+                    <b>Please confirm your password</b>
+                </label>
+                <div class="col-8">
+                    <input type="password" class="form-control"
+                        id="EditInputFName" name="delete_password" required
+                        placeholder="Password">
+                </div>
+            </div>
+            {% with errors =
+            get_flashed_messages(category_filter=["delete"]) %}
+            {% if errors %}
+            {% for msg in errors %}
+            <div class="alert alert-danger mt-2 w-100" role="alert">
+                {{ msg }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <div class="form-group col-6 offset-6 d-flex flex-row
+                justify-content-end pr-0 mt-3">
+                <button type="submit" class="btn btn-danger">
+                    I understand and want to delete my profile
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

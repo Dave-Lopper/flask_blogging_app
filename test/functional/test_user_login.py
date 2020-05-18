@@ -14,7 +14,6 @@ def test_submitting_login_form_verfies_email(
     })
     assert response.location.endswith("/")
     with test_client.session_transaction() as session:
-        print(session)
         assert "message" in dict(session["_flashes"]).keys()
         assert dict(session["_flashes"])["message"] == expected_flash
         assert "_user_id" not in session.keys()
@@ -41,7 +40,7 @@ def test_submitting_login_with_valid_data_logs_in(
         "login_email": user.email,
         "login_password": "hardcoded_password"
     })
-    assert response.location.endswith("/logged-in")
+    assert response.location.endswith("/profile")
 
     with test_client.session_transaction() as session:
         assert "_user_id" in session.keys()

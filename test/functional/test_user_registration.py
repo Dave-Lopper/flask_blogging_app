@@ -79,7 +79,7 @@ def test_user_is_registered_with_valid_data(test_client, db_init):
         }
     )
 
-    assert response.location.endswith("/logged-in")
+    assert response.location.endswith("/profile")
     assert User.query.count() == 1
     assert User.query.first().email == user["email"]
     assert User.query.first().first_name == user["first_name"]
