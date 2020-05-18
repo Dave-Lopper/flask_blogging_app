@@ -17,10 +17,20 @@
         {% endblock %}
     </head>
     <body>
-        <div class="container-fluid p-0">
+        <div class="container-fluid pl-0">
             {% if current_user.is_authenticated %}
-            <header>
-                <div class="float-right mt-3 mr-4"><a href="/logout">Logout</a></div>
+            <header class="position-fixed w-100 d-flex justify-content-between
+                shadow p-2 mb-5 bg-white rounded">
+                <h1 class="ml-4">Bloggin'</h1>
+                <nav class="mt-1 mb-1 mr-4">
+                    {% if not request.url.endswith("/logged-in") %}
+                    <a href="/logged-in" class="mr-4">Logged-in</a>
+                    {% endif %}
+                    {% if not request.url.endswith("/") %}
+                    <a href="/" class="mr-4">Index</a>
+                    {% endif %}
+                    <a href="/logout">Logout</a>
+                </nav>
             </header>
             {% endif %}
             {% block content %}

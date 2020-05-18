@@ -4,7 +4,7 @@
 {% endblock %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<div class="row">
+<div class="row pt-5">
     {% if not current_user.is_authenticated %}
     {% include "sidebar-login.j2.html" %}
     {% endif %}
