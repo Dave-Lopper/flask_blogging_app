@@ -2,7 +2,8 @@
 import re
 
 from flask import Blueprint, flash, redirect, request, url_for
-from flask_login import login_required, current_user
+from flask_login import login_required, logout_user, current_user
+from werkzeug.security import check_password_hash
 
 from app.boot import DB
 from app.models import User
@@ -32,4 +33,19 @@ def edit_profile():
         })
     DB.session.commit()
 
+    return redirect(url_for("main.profile"))
+
+
+@profile.route("/delete_profile", methods=["POST"])
+@login_required
+def delete_profile():
+    password = request.form.get("delete_password")
+
+    if check_password_hash(current_user.password, password):
+        user_id = current_user.id
+        logout_user()
+        DB.session.query(User).filter_by(id=user_id).delete()
+        return redirect(url_for("main.index"))
+
+    flash("Please check your password and try again", "delete")
     return redirect(url_for("main.profile"))

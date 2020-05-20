@@ -58,3 +58,9 @@ def test_db_session_updates_data_correctly(test_client, db_init, insert_user):
     assert DB.session.query(User).get(user.id).first_name == new_first_name
     assert DB.session.query(User).get(user.id).last_name == new_last_name
     assert DB.session.query(User).get(user.id).email == new_email
+
+
+def test_db_session_deletes_data_correctly(test_client, db_init, insert_user):
+    user = User.query.first()
+    DB.session.query(User).filter_by(id=user.id).delete()
+    assert User.query.count() == 0
