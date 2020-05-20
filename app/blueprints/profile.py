@@ -1,4 +1,4 @@
-# /app/blueprints/main.py
+# /app/blueprints/profile.py
 import re
 
 from flask import Blueprint, flash, redirect, request, url_for
@@ -18,7 +18,7 @@ def edit_profile():
     if email != current_user.email:
         email_regex = r'^\w+([.-]?\w+)*@\w+([.-]?\w+)*\.(\w{2,3})$'
         if re.match(email_regex, email) is None:
-            flash("Please provide a valid email adress.")
+            flash("Please provide a valid email adress", "edit")
             return redirect(url_for("main.profile"))
 
     first_name = request.form.get("edit_first_name")

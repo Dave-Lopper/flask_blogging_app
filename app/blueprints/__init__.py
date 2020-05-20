@@ -1,5 +1,6 @@
 # /app/blueprints/__init__.py
-from .main import main
 from .auth import auth
+from .main import main
+from .profile import profile
 
-__all__ = ['auth', 'main']
+__all__ = ['auth', 'main', 'profile']
