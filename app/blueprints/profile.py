@@ -3,7 +3,7 @@ import re
 
 from flask import Blueprint, flash, redirect, request, url_for
 from flask_login import login_required, logout_user, current_user
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from app.boot import DB
 from app.models import User
@@ -48,4 +48,29 @@ def delete_profile():
         return redirect(url_for("main.index"))
 
     flash("Please check your password and try again", "delete")
+    return redirect(url_for("main.profile"))
+
+
+@profile.route("/edit_password", methods=["POST"])
+@login_required
+def edit_password():
+    current_password = request.form.get("edit_current_password")
+
+    if not check_password_hash(current_user.password, current_password):
+        flash("Please check your password and try again", "current")
+        return redirect(url_for("main.change_password"))
+
+    new_password = request.form.get("edit_new_password")
+    new_password_confirm = request.form.get("edit_new_password_confirm")
+
+    if new_password != new_password_confirm:
+        flash("The new password and its confirmation don't match", "new")
+        return redirect(url_for("main.change_password"))
+
+    current_user.password = generate_password_hash(new_password)
+    DB.session.commit()
+    flash(
+        "Your password has been changed succesfully",
+        "change_password_success"
+    )
     return redirect(url_for("main.profile"))
