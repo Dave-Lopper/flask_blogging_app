@@ -1,5 +1,4 @@
 # test/functional/test_index_page.py
-from app.models import User
 
 
 def test_index_page_unlogged(test_client):
@@ -14,17 +13,8 @@ def test_index_page_unlogged(test_client):
     assert "Not with us yet ?" in decoded_response
 
 
-def test_index_page_logged(test_client, db_init, insert_user):
-    user = User.query.first()
-    test_client.post(
-        "/login",
-        data={
-            "login_email": user.email,
-            "login_password": "hardcoded_password"
-        }
-    )
-    with test_client.session_transaction():
-        response = test_client.get("/")
+def test_index_page_logged(test_client, db_init, insert_user, login_user):
+    response = test_client.get("/")
     assert response.status_code == 200
     decoded_response = response.data.decode("utf-8")
     assert "Bloggin'" in decoded_response

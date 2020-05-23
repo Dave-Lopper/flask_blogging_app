@@ -2,17 +2,9 @@
 from app.models import User
 
 
-def test_delete_profile_checks_password(test_client, db_init, insert_user):
+def test_delete_profile_checks_password(
+        test_client, db_init, insert_user, login_user):
     expected_flash = "Please check your password and try again"
-    user = User.query.first()
-    test_client.post(
-        "/login",
-        data={
-            "login_email": user.email,
-            "login_password": "hardcoded_password"
-        }
-    )
-
     response = test_client.post(
         "/delete_profile",
         data={
@@ -27,19 +19,11 @@ def test_delete_profile_checks_password(test_client, db_init, insert_user):
         assert dict(session["_flashes"])["delete"] is not None
         assert dict(session["_flashes"])["delete"] == expected_flash
         assert "_user_id" in session
-        assert int(session["_user_id"]) == user.id
+        assert int(session["_user_id"]) == login_user.id
 
 
-def test_delete_profile_deletes_user(test_client, db_init, insert_user):
-    user = User.query.first()
-    test_client.post(
-        "/login",
-        data={
-            "login_email": user.email,
-            "login_password": "hardcoded_password"
-        }
-    )
-
+def test_delete_profile_deletes_user(
+        test_client, db_init, insert_user, login_user):
     response = test_client.post(
         "/delete_profile",
         data={

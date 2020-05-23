@@ -4,6 +4,7 @@ import os
 import pytest
 
 from app.boot import create_app, DB
+from app.models import User
 from .factories import UserFactory
 
 
@@ -35,3 +36,16 @@ def insert_user(request):
     else:
         UserFactory.create()
         return 1
+
+
+@pytest.fixture
+def login_user(test_client):
+    user = User.query.first()
+    test_client.post(
+        "/login",
+        data={
+            "login_email": user.email,
+            "login_password": "hardcoded_password"
+        }
+    )
+    return user

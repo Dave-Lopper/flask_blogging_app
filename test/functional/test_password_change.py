@@ -1,18 +1,9 @@
 # test/functional/test_password_change.py
-from app.models import User
 
 
 def test_change_password_endpoint_checks_current_password(
-        test_client, db_init, insert_user):
+        test_client, db_init, insert_user, login_user):
     expected_flash = "Please check your password and try again"
-    user = User.query.first()
-    test_client.post(
-        "/login",
-        data={
-            "login_email": user.email,
-            "login_password": "hardcoded_password"
-        }
-    )
     response = test_client.post(
         "/edit_password",
         data={
@@ -30,16 +21,8 @@ def test_change_password_endpoint_checks_current_password(
 
 
 def test_change_password_endpoint_checks_new_password_confirm(
-        test_client, db_init, insert_user):
+        test_client, db_init, insert_user, login_user):
     expected_flash = "The new password and its confirmation don't match"
-    user = User.query.first()
-    test_client.post(
-        "/login",
-        data={
-            "login_email": user.email,
-            "login_password": "hardcoded_password"
-        }
-    )
     response = test_client.post(
         "/edit_password",
         data={
@@ -57,16 +40,8 @@ def test_change_password_endpoint_checks_new_password_confirm(
 
 
 def test_change_password_endpoint_works_correctly_with_valid_data(
-        test_client, db_init, insert_user):
+        test_client, db_init, insert_user, login_user):
     expected_flash = "Your password has been changed succesfully"
-    user = User.query.first()
-    test_client.post(
-        "/login",
-        data={
-            "login_email": user.email,
-            "login_password": "hardcoded_password"
-        }
-    )
     response = test_client.post(
         "/edit_password",
         data={
