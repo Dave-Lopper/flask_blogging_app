@@ -2,6 +2,12 @@
 
 
 def test_profile_page(test_client, db_init, insert_user, login_user):
+    """
+    GIVEN one logged-in user
+    WHEN profile is hit
+    THEN - profile.j2.html template rendered correctly
+         - User's attributes are rendered
+    """
     response = test_client.get("/profile")
     assert response.status_code == 200
     assert b"Profile" in response.data

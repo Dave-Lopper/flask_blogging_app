@@ -16,6 +16,12 @@ profile = Blueprint("profile", __name__)
 @profile.route("/edit_profile", methods=["POST"])
 @login_required
 def edit_profile():
+    """Edit profile endpoint.
+
+    Allows the user to change his attributes
+
+    :return: redirect Flask method to main.profile
+    :rtype: werkzeug.wrappers.response.Response"""
     email = request.form.get("edit_email")
     if email != current_user.email:
         if re.match(email_regex, email) is None:
@@ -39,6 +45,13 @@ def edit_profile():
 @profile.route("/delete_profile", methods=["POST"])
 @login_required
 def delete_profile():
+    """Delete profile endpoint.
+
+    Allows the user to delete his account,
+    Asks for the password, and checks it.
+
+    :return: redirect Flask method to main.profile
+    :rtype: werkzeug.wrappers.response.Response"""
     password = request.form.get("delete_password")
 
     if check_password_hash(current_user.password, password):
@@ -54,6 +67,13 @@ def delete_profile():
 @profile.route("/edit_password", methods=["POST"])
 @login_required
 def edit_password():
+    """Edit password endpoint
+
+    Allows the user to change his password,
+    Asks for the password, and checks it.
+
+    :return: redirect Flask method to main.profile
+    :rtype: werkzeug.wrappers.response.Response"""
     current_password = request.form.get("edit_current_password")
 
     if not check_password_hash(current_user.password, current_password):

@@ -7,6 +7,12 @@ expected_flash = "Please check your login details and try again."
 
 def test_submitting_login_form_verfies_email(
         test_client, db_init, insert_user):
+    """
+    GIVEN one inserted user
+    WHEN login is hit with invalid email
+    THEN - Redirection on index
+         - Expected message is flashed in message category
+    """
     user = User.query.first()
     response = test_client.post("/login", data={
         "login_email": "unexisting_email@gmail.com",
@@ -21,6 +27,12 @@ def test_submitting_login_form_verfies_email(
 
 def test_submitting_login_form_verifies_password(
         test_client, db_init, insert_user):
+    """
+    GIVEN one inserted user
+    WHEN login is hit with unaccurate password
+    THEN - Redirection on index
+         - Expected message is flashed in message category
+    """
     user = User.query.first()
     response = test_client.post("/login", data={
         "login_email": user.email,
@@ -35,6 +47,13 @@ def test_submitting_login_form_verifies_password(
 
 def test_submitting_login_with_valid_data_logs_in(
         test_client, db_init, insert_user):
+    """
+    GIVEN one inserted user
+    WHEN login is hit with valid data
+    THEN - Redirection on profile
+         - No message is flashed
+         - User is indeed logged-in
+    """
     user = User.query.first()
     response = test_client.post("/login", data={
         "login_email": user.email,

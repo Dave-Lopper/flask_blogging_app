@@ -15,6 +15,11 @@ DB = SQLAlchemy()
 
 
 def create_app():
+    """Instanciates and configures Flask app.
+
+    :return: configured Flask app
+    :rtype: flask.app.Flask
+    """
     app = Flask(__name__,
                 template_folder=os.path.abspath("app/templates"))
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True

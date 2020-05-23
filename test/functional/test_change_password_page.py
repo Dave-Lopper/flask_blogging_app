@@ -2,6 +2,9 @@
 
 
 def test_change_password_page(test_client, db_init, insert_user, login_user):
+    """GIVEN one logged user
+        WHEN /profile/change_password is hit
+        THEN change-password.j2.html template rendered correctly"""
     response = test_client.get("/profile/change_password")
     assert response.status_code == 200
     assert b"Change password" in response.data

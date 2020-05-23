@@ -2,6 +2,12 @@
 
 
 def test_index_page_unlogged(test_client):
+    """
+    GIVEN set-up test client
+    WHEN index is hit
+    THEN - Template is rendered correctly
+         - Login form is included
+    """
     response = test_client.get("/")
     assert response.status_code == 200
     decoded_response = response.data.decode("utf-8")
@@ -14,6 +20,12 @@ def test_index_page_unlogged(test_client):
 
 
 def test_index_page_logged(test_client, db_init, insert_user, login_user):
+    """
+    GIVEN one logged-in user
+    WHEN index is hit
+    THEN - Template is rendered correctly
+         - Login form not included
+    """
     response = test_client.get("/")
     assert response.status_code == 200
     decoded_response = response.data.decode("utf-8")

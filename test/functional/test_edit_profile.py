@@ -4,6 +4,13 @@ from app.models import User
 
 def test_email_is_verified_edit_profile(
         test_client, db_init, insert_user, login_user):
+    """
+    GIVEN one logged-in user
+    WHEN edit_profile is hit with invalid email address
+    THEN - Redirection on profile
+         - Expected message is flashed
+         - User's attributes are unchanged
+    """
     invalid_emails = ["invalidemail.com", "invalid@email"]
     expected_flash = "Please provide a valid email adress"
 
@@ -28,6 +35,13 @@ def test_email_is_verified_edit_profile(
 
 def test_email_is_edited_with_valid_data(
         test_client, db_init, insert_user, login_user):
+    """
+    GIVEN one logged-in user
+    WHEN edit_profile is hit with valid email
+    THEN - No message is flashed
+         - User has been changed
+         - Updated attributes are visible on profile
+    """
     response = test_client.post(
         "/edit_profile",
         data={

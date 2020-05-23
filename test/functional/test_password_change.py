@@ -3,6 +3,12 @@
 
 def test_change_password_endpoint_checks_current_password(
         test_client, db_init, insert_user, login_user):
+    """
+    GIVEN one logged-in user
+    WHEN edit_password is hit with unaccurate password
+    THEN - Redirection on change_password
+         - Expected message is flashed in current category
+    """
     expected_flash = "Please check your password and try again"
     response = test_client.post(
         "/edit_password",
@@ -22,6 +28,12 @@ def test_change_password_endpoint_checks_current_password(
 
 def test_change_password_endpoint_checks_new_password_confirm(
         test_client, db_init, insert_user, login_user):
+    """
+    GIVEN one logged-in user
+    WHEN edit_password is hit with new password and confirmation not matching
+    THEN - Redirection on change_password
+         - Expected message is flashed in new category
+    """
     expected_flash = "The new password and its confirmation don't match"
     response = test_client.post(
         "/edit_password",
@@ -41,6 +53,12 @@ def test_change_password_endpoint_checks_new_password_confirm(
 
 def test_change_password_endpoint_works_correctly_with_valid_data(
         test_client, db_init, insert_user, login_user):
+    """
+    GIVEN one logged-in user
+    WHEN edit_password is hit with valid data
+    THEN - Redirection on profile
+         - Expected message is flashed in change_password_success category
+    """
     expected_flash = "Your password has been changed succesfully"
     response = test_client.post(
         "/edit_password",

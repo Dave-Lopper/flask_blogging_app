@@ -4,6 +4,13 @@ from app.models import User
 
 def test_delete_profile_checks_password(
         test_client, db_init, insert_user, login_user):
+    """
+    GIVEN one logged-in user
+    WHEN /delete profile is hit with unaccurate password
+    THEN - Redirection on profile
+         - Expected message is flashed
+         - User is still logged-in
+    """
     expected_flash = "Please check your password and try again"
     response = test_client.post(
         "/delete_profile",
@@ -24,6 +31,14 @@ def test_delete_profile_checks_password(
 
 def test_delete_profile_deletes_user(
         test_client, db_init, insert_user, login_user):
+    """
+    GIVEN one logged-in user
+    WHEN /delete profile is hit with accurate password
+    THEN - Redirection on index
+         - No message is flashed
+         - User is not logged-in
+         - User is deleted
+    """
     response = test_client.post(
         "/delete_profile",
         data={

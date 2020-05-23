@@ -2,6 +2,11 @@
 
 
 def test_signin_page(test_client):
+    """
+    GIVEN set-up test client
+    WHEN signin is hit
+    THEN signin.j2.html rendered correctly
+    """
     response = test_client.get("/signin")
     assert response.status_code == 200
     decoded_response = response.data.decode("utf-8")

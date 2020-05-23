@@ -18,6 +18,13 @@ user = {
 
 
 def test_email_is_verified_registration(test_client, db_init):
+    """
+    GIVEN set-up test client and applied migrations
+    WHEN register is hit with invalid email
+    THEN - Redirection on signin
+         - Expected message is flashed in message category
+         - No user is inserted
+    """
     invalid_emails = ["invalidemail.com", "invalid@email"]
     expected_flash = "Please provide a valid email adress"
 
@@ -43,6 +50,13 @@ def test_email_is_verified_registration(test_client, db_init):
 
 
 def test_user_password_is_verified_registration(test_client, db_init):
+    """
+    GIVEN set-up test client and applied migrations
+    WHEN register is hit with password and confirmation not matching
+    THEN - Redirection on signin
+         - Expected message is flashed in message category
+         - No user is inserted
+    """
     password_confirm = "IdontLovePineapplePizzas"
     expected_flash = "Password and its confirmation are different !"
     response = test_client.post(
@@ -67,6 +81,15 @@ def test_user_password_is_verified_registration(test_client, db_init):
 
 
 def test_user_is_registered_with_valid_data(test_client, db_init):
+    """
+    GIVEN set-up test client and applied migrations
+    WHEN register is hit with valid data
+    THEN - Redirection on profile
+         - Expected message is flashed in message category
+         - User is inserted in DB
+         - User's attributes are correct
+         - User is logged-in
+    """
     response = test_client.post(
         "/register",
         data={

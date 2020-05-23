@@ -10,6 +10,12 @@ new_email = "dave@lopper.com"
 
 
 def test_user_model_inserts_data_correctly(test_client, db_init):
+    """
+    GIVEN set-up test client and applied migrations
+    WHEN User is inserted using model
+    THEN - User is indeed inserted
+         - User's attributes are correct
+    """
     user = User(
         first_name="Dave",
         last_name="Lopper",
@@ -31,6 +37,11 @@ def test_user_model_inserts_data_correctly(test_client, db_init):
 
 
 def test_user_model_updates_data_correctly(test_client, db_init, insert_user):
+    """
+    GIVEN one inserted user
+    WHEN User is updated using model
+    THEN - User's attributes are correctly updated in DB
+    """
     user = User.query.first()
 
     user.first_name = new_first_name
@@ -61,6 +72,11 @@ def test_db_session_updates_data_correctly(test_client, db_init, insert_user):
 
 
 def test_db_session_deletes_data_correctly(test_client, db_init, insert_user):
+    """
+    GIVEN one inserted user
+    WHEN User is deleted using DB object
+    THEN User is indeed missing from DB
+    """
     user = User.query.first()
     DB.session.query(User).filter_by(id=user.id).delete()
     assert User.query.count() == 0

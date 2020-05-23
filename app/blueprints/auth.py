@@ -22,6 +22,14 @@ def logout():
 
 @auth.route("/login", methods=["POST"])
 def login():
+    """Login endoint
+
+    Logs user in and redirects to profile page,
+    to the index in case of failure
+
+    :return: redirect Flask method to main.profile
+    :rtype: werkzeug.wrappers.response.Response
+    """
     email = request.form.get("login_email")
     password = request.form.get("login_password")
     user = User.query.filter_by(email=email).first()
@@ -37,6 +45,15 @@ def login():
 
 @auth.route("/register", methods=["POST"])
 def register():
+    """Register endpoint
+
+    Checks users input, adds it to the database,
+    logs him in and redirects him to his profile if success.
+    Redirects on index on failure.
+
+    :return: redirect Flask method to main.profile
+    :rtype: werkzeug.wrappers.response.Response
+    """
     email = request.form.get("signin_email")
     if DB.session.query(User.id).filter_by(email=email).scalar() is not None:
         flash("Email already exists", "email")
