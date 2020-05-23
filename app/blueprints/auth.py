@@ -8,6 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from app.models import User
 from app.boot import DB
+from app.utils import email_regex
 
 auth = Blueprint("auth", __name__)
 
@@ -41,8 +42,6 @@ def register():
         flash("Email already exists", "email")
         return redirect(url_for("main.signin"))
 
-    # Bonus exercise
-    email_regex = r'^\w+([.-]?\w+)*@\w+([.-]?\w+)*\.(\w{2,3})$'
     if re.match(email_regex, email) is None:
         flash("Please provide a valid email adress", "email")
         return redirect(url_for("main.signin"))

@@ -7,6 +7,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from app.boot import DB
 from app.models import User
+from app.utils import email_regex
 
 
 profile = Blueprint("profile", __name__)
@@ -17,7 +18,6 @@ profile = Blueprint("profile", __name__)
 def edit_profile():
     email = request.form.get("edit_email")
     if email != current_user.email:
-        email_regex = r'^\w+([.-]?\w+)*@\w+([.-]?\w+)*\.(\w{2,3})$'
         if re.match(email_regex, email) is None:
             flash("Please provide a valid email adress", "edit")
             return redirect(url_for("main.profile"))
