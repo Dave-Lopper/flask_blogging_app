@@ -16,6 +16,7 @@ auth = Blueprint("auth", __name__)
 @login_required
 @auth.route("/logout")
 def logout():
+    """Logs our current user out."""
     logout_user()
     return redirect(url_for('main.index'))
 

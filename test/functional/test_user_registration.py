@@ -4,6 +4,7 @@ import datetime
 from werkzeug.security import check_password_hash
 
 from app.models import User
+from test.factories import UserFactory
 
 
 user = {
@@ -47,6 +48,37 @@ def test_email_is_verified_registration(test_client, db_init):
             assert dict(session["_flashes"])["email"] == expected_flash
 
     assert User.query.count() == 0
+
+
+def test_email_registration_existing_email(test_client, db_init):
+    """
+    GIVEN one inserted user
+    WHEN register is hit with existing email
+    THEN - Redirection on signin
+         - Expected message is flashed in email category
+         - No user is inserted
+    """
+    UserFactory.create(email="dave@lopper.com")
+    expected_flash = "Email already exists"
+
+    response = test_client.post(
+        "/register",
+        data={
+            "signin_email": "dave@lopper.com",
+            "signin_first_name": user["first_name"],
+            "signin_last_name": user["last_name"],
+            "signin_password": user["password"],
+            "signin_password_confirm": user["password"],
+            "signin_birth_data": user["birth_date"]})
+
+    assert response.location.endswith("/signin")
+
+    with test_client.session_transaction() as session:
+        assert "email" in dict(session["_flashes"]).keys()
+        assert dict(session["_flashes"])["email"] is not None
+        assert dict(session["_flashes"])["email"] == expected_flash
+
+    assert User.query.count() == 1
 
 
 def test_user_password_is_verified_registration(test_client, db_init):
