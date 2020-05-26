@@ -5,7 +5,7 @@ import pytest
 
 from app.boot import create_app, DB
 from app.models import User
-from .factories import UserFactory
+from .factories import UserFactory, PostFactory
 
 
 @pytest.fixture
@@ -35,6 +35,16 @@ def insert_user(request):
         return request.param
     else:
         UserFactory.create()
+        return 1
+
+
+@pytest.fixture
+def insert_post(request):
+    if hasattr(request, "param"):
+        PostFactory.create_batch(request.param)
+        return request.param
+    else:
+        PostFactory.create()
         return 1
 
 

@@ -1,4 +1,4 @@
-# test/unit/test_db_models.py
+# test/unit/test_user_model.py
 import datetime
 
 from app.boot import DB
