@@ -1,6 +1,7 @@
 # /app/models/user.py
 from flask_login import UserMixin
 from sqlalchemy import DateTime
+from sqlalchemy.orm import relationship
 
 from app.boot import DB
 
@@ -14,3 +15,4 @@ class User(UserMixin, DB.Model):
     last_name = DB.Column(DB.String(50))
     birth_date = DB.Column(DateTime)
     registered_at = DB.Column(DateTime)
+    posts = relationship("Post", back_populates="user")
