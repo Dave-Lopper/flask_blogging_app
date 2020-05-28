@@ -32,9 +32,10 @@ def create_app():
     from .models import User, Post
     Migrate(app, DB)
 
-    from .blueprints import auth, main, profile
+    from .blueprints import auth, main, post, profile
     app.register_blueprint(auth)
     app.register_blueprint(main)
+    app.register_blueprint(post)
     app.register_blueprint(profile)
 
     login_manager = LoginManager()
