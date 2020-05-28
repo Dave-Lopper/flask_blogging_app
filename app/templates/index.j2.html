@@ -1,6 +1,10 @@
 {% extends "layout.j2.html" %}
 {% block head %}
 {{ super() }}
+{% if current_user.is_authenticated %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',
+    filename='post-writing.css') }}" />
+{% endif %}
 {% endblock %}
 {% block title %}Home{% endblock %}
 {% block content %}
@@ -8,6 +12,12 @@
     {% if not current_user.is_authenticated %}
     {% include "sidebar-login.j2.html" %}
     {% endif %}
-    <h1 class="ml-4 mt-4">Bloggin'</h1>
+    <div class="col-8 offset-2 pt-5 indexCol">
+
+
+    </div>
 </div>
+{% if current_user.is_authenticated %}
+{% include "post-writing.j2.html" %}
+{% endif %}
 {% endblock %}

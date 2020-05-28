@@ -18,10 +18,11 @@
     </head>
     <body>
         <div class="container-fluid pl-0">
-            {% if current_user.is_authenticated %}
-            <header class="position-fixed w-100 d-flex justify-content-between
+            <header class="position-fixed w-100 d-flex
+                justify-content-between
                 shadow p-2 mb-5 bg-white rounded">
                 <h1 class="ml-4">Bloggin'</h1>
+                {% if current_user.is_authenticated %}
                 <nav class="mt-1 mb-1 mr-4">
                     {% if not request.url.endswith("/profile") %}
                     <a href="/profile" class="mr-4">Profile</a>
@@ -31,8 +32,8 @@
                     {% endif %}
                     <a href="/logout">Logout</a>
                 </nav>
+                {% endif %}
             </header>
-            {% endif %}
             {% block content %}
             {% endblock %}
         </div>
