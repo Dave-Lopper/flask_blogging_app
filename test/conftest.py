@@ -1,6 +1,7 @@
 # test/conftest.py
 import os
 
+from click.testing import CliRunner
 import pytest
 
 from app.boot import create_app, DB
@@ -59,3 +60,21 @@ def login_user(test_client):
         }
     )
     return user
+
+
+@pytest.fixture
+def cli_tester():
+    app = create_app()
+    db_test = "{}_test".format(os.environ["SQLALCHEMY_DATABASE_URI"])
+    app.config["SQLALCHEMY_DATABASE_URI"] = db_test
+    app.config["TESTING"] = True
+    ctx = app.app_context()
+    ctx.push()
+    DB.create_all()
+    runner = CliRunner(
+        env={"SQLALCHEMY_DATABASE_URI": db_test}
+    )
+    yield app, DB, runner
+    DB.session.close()
+    DB.drop_all()
+    ctx.pop()
