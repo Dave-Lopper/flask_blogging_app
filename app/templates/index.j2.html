@@ -13,8 +13,7 @@
     {% include "sidebar-login.j2.html" %}
     {% endif %}
     <div class="col-8 offset-2 pt-5 indexCol">
-
-
+        {% include "feed.j2.html" %}
     </div>
 </div>
 {% if current_user.is_authenticated %}

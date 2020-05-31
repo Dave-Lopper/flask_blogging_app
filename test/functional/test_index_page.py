@@ -1,7 +1,7 @@
 # test/functional/test_index_page.py
 
 
-def test_index_page_unlogged(test_client):
+def test_index_page_unlogged(test_client, db_init):
     """
     GIVEN set-up test client
     WHEN index is hit

@@ -2,12 +2,15 @@
 from flask import Blueprint, render_template
 from flask_login import login_required
 
+from app.models import Post
+
 main = Blueprint("main", __name__)
 
 
 @main.route("/")
 def index():
-    return render_template("index.j2.html")
+    posts = Post.query.order_by(Post.posted_at.desc()).all()
+    return render_template("index.j2.html", posts=posts)
 
 
 @main.route("/signin")

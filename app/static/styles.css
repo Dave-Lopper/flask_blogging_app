@@ -10,7 +10,8 @@ header h1 {
 }
 .sidebar-unlogged {
   background-color: #f1f1f1;
-  height: calc(100vh - 3rem);
+  height: 100vh;
+  position: fixed;
   border-right: 1px solid #d0d0d0;
 }
 .btnForm {

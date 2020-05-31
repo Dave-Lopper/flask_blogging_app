@@ -1,0 +1,16 @@
+
+{% for post in posts %}
+<div class="row"><div class="col-10 offset-1 card p-3 mb-3">
+        <h5 class="card-title">{{ post.user.first_name }} {{ post.user.last_name
+            }}</h5>
+        <p class="card-content">
+            {% if post.content|length <180 %}
+                {{ post.content }}
+                {% else %}
+                {{ post.excerpt }}
+                {% endif %}
+        </p>
+        <p class="card-subtitle mb-2 text-muted">{{ post.posted_at.strftime("%d
+            %b, %Y") }}</p>
+    </div></div>
+{% endfor %}
