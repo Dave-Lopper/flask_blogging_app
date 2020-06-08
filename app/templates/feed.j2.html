@@ -14,3 +14,53 @@
             %b, %Y") }}</p>
     </div></div>
 {% endfor %}
+
+{% if user.is_authenticated %}
+{% set rowClass = "paginationContainer" %}
+{% else %}
+{% set rowClass = "" %}
+{% endif %}
+
+<div class="row {{ rowClass }}">
+    <div class="col-12 d-flex justify-content-center">
+        <nav>
+            <ul class="pagination">
+                {% if page == 1 %}
+                <li class="page-item disabled" test="previous">
+                    <a class="page-link" href="#">Previous</a>
+                </li>
+                {% else %}
+                <li class="page-item" test="previous">
+                    <a class="page-link" href="/?page={{page-1}}">Previous</a>
+                </li>
+                {% endif %}
+                {% for iteration in pages %}
+                {% if iteration is not none %}
+                {% if iteration == page %}
+                <li class="page-item disabled" test="{{page}}">
+                    <a class="page-link" href="#">{{iteration}}</a>
+                </li>
+                {% else %}
+                <li class="page-item" test="{{page}}">
+                    <a class="page-link" href="/?page={{iteration}}">{{iteration}}</a>
+                </li>
+                {% endif %}
+                {% else %}
+                <li class="page-item disabled" test="...">
+                    <a class="page-link" href="#">...</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+                {% if page == nb_pages %}
+                <li class="page-item disabled" test="next">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+                {% else %}
+                <li class="page-item" test="next">
+                    <a class="page-link" href="/?page={{page+1}}">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>

@@ -10,7 +10,7 @@ def test_seed_command(cli_tester):
     THEN expected output is returned, data is inserted
     """
     runner = cli_tester[2]
-    result = runner.invoke(seed, input='50\n1')
+    result = runner.invoke(seed, input="50\n1")
     assert "Working on it..." in result.output
     assert "Inserted 50 users and 50 posts in database." in result.output
     assert User.query.count() == 50
@@ -24,7 +24,7 @@ def test_seed_command_second_case(cli_tester):
     THEN expected output is returned, data is inserted
     """
     runner = cli_tester[2]
-    result = runner.invoke(seed, input='25\n3')
+    result = runner.invoke(seed, input="25\n3")
     assert "Working on it..." in result.output
     assert "Inserted 25 users and 75 posts in database." in result.output
     assert User.query.count() == 25

@@ -22,10 +22,13 @@ def create_app():
     """
     app = Flask(__name__,
                 template_folder=os.path.abspath("app/templates"))
+
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
     app.config["SQLALCHEMY_DATABASE_URI"] = \
         os.environ["SQLALCHEMY_DATABASE_URI"]
     app.config["ENV"] = os.getenv("ENV", "dev")
+    app.config["FEED_PAGE_SIZE"] = 20
+
     app.secret_key = os.environ["SECRET_KEY"]
     DB.init_app(app)
 
