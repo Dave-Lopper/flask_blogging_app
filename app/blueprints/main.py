@@ -2,7 +2,7 @@
 from flask import Blueprint, current_app, render_template, request
 from flask_login import login_required, current_user
 
-from app.models import Post
+from app.models import Post, User
 
 main = Blueprint("main", __name__)
 
@@ -39,3 +39,27 @@ def profile():
 @login_required
 def change_password():
     return render_template("change-password.j2.html")
+
+
+@main.route("/post/<post_id>")
+def post_detail(post_id):
+    post = Post.query.get(int(post_id))
+    if post is not None:
+        return render_template(
+            "post-detail.j2.html",
+            post=post
+        )
+    else:
+        return render_template("404.j2.html"), 404
+
+
+@main.route("/user/<user_id>")
+def user_detail(user_id):
+    user = User.query.get(int(user_id))
+    if user is not None:
+        return render_template(
+            "user-detail.j2.html",
+            user=user
+        )
+    else:
+        return render_template("404.j2.html"), 404

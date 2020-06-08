@@ -1,0 +1,27 @@
+{% extends "layout.j2.html" %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block title %}Post{% endblock %}
+{% block content %}
+<div class="row pt-5">
+    {% if not current_user.is_authenticated %}
+    {% include "sidebar-login.j2.html" %}
+    {% endif %}
+    <div class="col-8 offset-2 pt-5 indexCol">
+
+
+        <div class="row"><div class="col-10 offset-1 card p-3 mb-3">
+                <h5 class="card-title">{{ post.user.first_name }} {{
+                    post.user.last_name
+                    }}</h5>
+                <p class="card-content">
+                    {{ post.content }}
+                </p>
+                <p class="card-subtitle mb-2 text-muted">{{
+                    post.posted_at.strftime("%d
+                    %b, %Y") }}</p>
+            </div></div>
+    </div>
+</div>
+{% endblock %}
