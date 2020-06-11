@@ -56,10 +56,16 @@ def post_detail(post_id):
 @main.route("/user/<user_id>")
 def user_detail(user_id):
     user = User.query.get(int(user_id))
+    if current_user.is_authenticated:
+        self_page = True if current_user.id == user.id else False
+    else:
+        self_page = False
+
     if user is not None:
         return render_template(
             "user-detail.j2.html",
-            user=user
+            user=user,
+            self_page=self_page,
         )
     else:
         return render_template("404.j2.html"), 404

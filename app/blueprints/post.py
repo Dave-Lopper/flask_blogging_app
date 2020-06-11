@@ -2,7 +2,7 @@
 import datetime
 
 from faker import Faker
-from flask import Blueprint, redirect, request, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import login_required, current_user
 
 from app.models import Post, User
@@ -32,6 +32,28 @@ def write_post():
     DB.session.add(post)
     DB.session.commit()
     return redirect(url_for('main.index'))
+
+
+@post.route("/delete_post/<post_id>", methods=["GET"])
+@login_required
+def delete_post(post_id):
+    """Post deletion endpoint
+
+    Deletes the given post in DB
+
+    :param post_id: ID of post to delete
+    :type post_id: [string]
+    :return: redirect Flask method to main.index
+    :rtype: werkzeug.wrappers.response.Response
+    """
+    post = Post.query.get(int(post_id))
+    if post is None:
+        return render_template("404.j2.html"), 404
+    else:
+        DB.session.delete(post)
+        DB.session.commit()
+        flash("Post deleted succesfully")
+        return redirect(f"/user/{current_user.id}")
 
 
 @post.cli.command("seed")
