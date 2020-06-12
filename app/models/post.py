@@ -14,6 +14,8 @@ class Post(DB.Model):
     user_id = DB.Column(DB.Integer, ForeignKey('users.id'))
     user = relationship("User", back_populates="posts")
 
+    likes = relationship("Like")
+
     @hybrid_property
     def excerpt(self):
         """Shortens post content to 180 chars.

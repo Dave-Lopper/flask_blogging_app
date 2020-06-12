@@ -32,7 +32,7 @@ def create_app():
     app.secret_key = os.environ["SECRET_KEY"]
     DB.init_app(app)
 
-    from .models import User, Post
+    from .models import Like, User, Post
     Migrate(app, DB)
 
     from .blueprints import auth, main, post, profile
