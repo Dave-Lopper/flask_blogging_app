@@ -27,3 +27,8 @@ class Post(DB.Model):
         words.pop(len(words) - 1)
         excerpt = " ".join(words)
         return f"{excerpt}..."
+
+    @hybrid_property
+    def users_liked(self):
+        """Returns the ID of the users who liked the post."""
+        return list(map(lambda x: x.user_id, self.likes))

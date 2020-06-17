@@ -33,14 +33,19 @@
             <p class="card-subtitle mb-2 text-muted col-8">{{
                 post.posted_at.strftime("%d
                 %b, %Y") }}</p>
+            {% if post.likes|length > 0 %}
+            <p>{{ post.likes|length }} Like(s)</p>
+            {% endif %}
+            {% include "like.j2.html" %}
             {% if self_page %}
-            <a class="btn btn-danger col-2" href="/delete_post/{{
+            <a class="btn btn-danger col-2 mt-2" href="/delete_post/{{
                 post.id
                 }}"
                 role="button">
                 Delete post
             </a>
             {% endif %}
+
 
         </div>
         {% endfor %}

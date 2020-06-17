@@ -1,0 +1,19 @@
+{% if user.is_authenticated %}
+{% if user.id in post.users_liked %}
+<span id="unlike"><a href="/unlike_post/{{ post.id }}/{{ user.id }}"
+        class="badge
+        badge-pill badge-danger
+        p-2 col-2 d-flex justify-content-center
+        align-items-center">{%
+        include
+        "unlike-icon.j2.html" %} Unlike</a></span>
+{% else %}
+<span id="like"><a href="/like_post/{{ post.id }}/{{ user.id }}"
+        class="badge
+        badge-pill badge-primary
+        p-2 col-2 d-flex justify-content-center
+        align-items-center">{%
+        include
+        "like-icon.j2.html" %} Like</a></span>
+{% endif %}
+{% endif %}

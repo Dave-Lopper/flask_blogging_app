@@ -16,6 +16,10 @@
         </p>
         <p class="card-subtitle mb-2 text-muted">{{ post.posted_at.strftime("%d
             %b, %Y") }}</p>
+        {% if post.likes|length > 0 %}
+        <p>{{ post.likes|length }} Like(s)</p>
+        {% endif %}
+        {% include "like.j2.html" %}
     </div>
 </div>
 {% endfor %}

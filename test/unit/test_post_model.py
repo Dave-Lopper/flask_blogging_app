@@ -1,8 +1,10 @@
 # test/unit/test_post_model.py
 import datetime
 
+import pytest
+
 from app.boot import DB
-from app.models import User, Post
+from app.models import User, Post, Like
 from test.factories import PostFactory
 
 
@@ -100,3 +102,25 @@ def test_hybrid_attribute_excerpt_has_expected_behaviour(test_client, db_init):
 
     assert post.excerpt == expected_excerpt
     assert len(post.excerpt) <= 180
+
+
+@pytest.mark.parametrize("insert_user", [3], indirect=["insert_user"])
+def test_hybrid_attribute_users_liked(test_client, db_init, insert_user,
+                                      insert_post):
+    """
+    GIVEN one inserted post, three inserted users
+    THEN post hybrid attribute is empty
+    WHEN three likes are inserted for that post
+    THEN post hybrid attribute has the expected values
+         (IDs of the users who liked)
+    """
+    users = User.query.all()
+    post = Post.query.first()
+    assert post.likes == []
+    assert post.users_liked == []
+    for user in users:
+        db_init.session.add(Like(user_id=user.id, post_id=post.id))
+    db_init.session.commit()
+    assert len(post.users_liked)
+    for user in users:
+        assert user.id in post.users_liked
