@@ -35,8 +35,9 @@ def create_app():
     from .models import Like, User, Post
     Migrate(app, DB)
 
-    from .blueprints import auth, main, post, profile
+    from .blueprints import auth, like, main, post, profile
     app.register_blueprint(auth)
+    app.register_blueprint(like)
     app.register_blueprint(main)
     app.register_blueprint(post)
     app.register_blueprint(profile)
