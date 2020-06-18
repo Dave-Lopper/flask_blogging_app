@@ -26,6 +26,7 @@ def create_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
     app.config["SQLALCHEMY_DATABASE_URI"] = \
         os.environ["SQLALCHEMY_DATABASE_URI"]
+    app.config["SQLALCHEMY_POOL_RECYCLE"] = 90
     app.config["ENV"] = os.getenv("ENV", "dev")
     app.config["FEED_PAGE_SIZE"] = 20
 
