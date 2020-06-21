@@ -1,0 +1,17 @@
+language: python
+python: "3.7"
+services:
+  - mysql
+before_install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS blogging_app_test;'
+install:
+  - pip install -r requirements.txt
+script:
+  - pytest
+deploy:
+  provider: heroku
+  api_key:
+    secure: fmITIgS9vm7wtu4ed3sZyd4KyUi4uYs0eBIJ/6QAqMpw0AjtyzZcADL0PK/WNfW9xIAtyaLQhw7hV/zMuEnyvboAWa1aTUr3B6rkJq14sweAXWBI11u7zJvxmRrCQIEW700GzIqPzLccgi+GJ/mDYeMkwU54owJH45afvdk88R9VoIjIf69nODgFO3BT5nmDpfByYWOf3aKc9/EDjRk4I/jfUFLK+n/GmPPd8UWtAFrRhB/Yyyj1kuwaNkkTGNBBu7O5C/MIvfhNVC5twWg2QNOkH01MKmJLc7SozgEpnvvllCoX6AXbXvE0yb0NbdffJ16dnOBAq3bkBNxZ2CzzrddqsP9ot4jBmZ9kZ8/g3fmHoNl+lXWto69oa4ra+2BQXECHBNaVrTYq1wJ+LEAafCWPp4qNwhiyIKdwcB7J4PiXlnwPv7qB2FJJyvDovqFPTbkXcWjmh8P8tzObtdGsgM12gFiw6KnU8U4TXWw+wfI30K0HLPpodLCMNUx90XyImaNg62XhymZwX54rPyCsPOsRlNT9JXuUptnj5EM2A5IzZozxzfe/76raAZ7aPS3sJmpbrF7fwxTjC+H/9bFsd9CHAkRXj5ZOFXK0+KYzRBHIs8aej8AscsyLpg+6hpHytYbqFl+15WVHtT3gatO7l6bVWnx5O6dxULUvTofzzoo=
+  run: flask db upgrade
+  app:
+    master: dave-lopper-flask-blogging-app
