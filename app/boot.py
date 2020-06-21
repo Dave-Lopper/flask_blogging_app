@@ -33,7 +33,8 @@ def create_app():
     app.secret_key = os.environ["SECRET_KEY"]
     DB.init_app(app)
 
-    from .models import Like, User, Post
+    # Needed for Flask-Migrate model changes tracking
+    from .models import Like, User, Post  # noqa: F401
     Migrate(app, DB)
 
     from .blueprints import auth, like, main, post, profile
